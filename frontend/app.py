@@ -18,7 +18,7 @@ The model predicts values based on user input features.
 """
 )
 features=[]
-model=joblib.load("diabetes.pkl")
+model = joblib.load("../backend/diabetes.pkl")
 
 
 for i in range(10):
