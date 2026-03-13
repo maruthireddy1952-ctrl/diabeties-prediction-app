@@ -1,6 +1,6 @@
 import streamlit as st
 import requests
-
+import joblib
 st.title("Diabeties Prediction app")
 st.subheader("Machine Learning Model Demo")
 st.markdown("Enter 10 features  and click ** Predict ** to get the prediction")
@@ -18,6 +18,8 @@ The model predicts values based on user input features.
 """
 )
 features=[]
+model=joblib.load("diabetes.pkl")
+
 
 for i in range(10):
     value=st.number_input(f"Feature {i+1}",value=0.0)
@@ -27,10 +29,11 @@ if st.button("Predict"):
         st.error("Please enter all 10 features.")
     else:
         try:
-            url="http://127.0.0.1:8000/predict"
-            with st.spinner("Generating prediction..."):
-                response=requests.post(url,json={"features":features})
-                result=response.json()
-                st.success(f"Prediction: {result['Prediction']}")
+            # url="http://127.0.0.1:8000/predict"
+             with st.spinner("Generating prediction..."):
+            #     response=requests.post(url,json={"features":features})
+            #     result=response.json()
+                prediction = model.predict([features])
+                st.success(f"Prediction: {prediction.tolist()}")
         except Exception as e:
             st.error("API not responding.Make sure FastAPI server is running.")
