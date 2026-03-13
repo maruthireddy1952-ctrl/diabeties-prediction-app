@@ -25,15 +25,12 @@ for i in range(10):
     value=st.number_input(f"Feature {i+1}",value=0.0)
     features.append(value)
 if st.button("Predict"):
-    if len(features) !=10 or 0.0 in features :
-        st.error("Please enter all 10 features.")
-    else:
-        try:
-            # url="http://127.0.0.1:8000/predict"
-             with st.spinner("Generating prediction..."):
-            #     response=requests.post(url,json={"features":features})
-            #     result=response.json()
-                prediction = model.predict([features])
-                st.success(f"Prediction: {prediction.tolist()}")
-        except Exception as e:
-            st.error("API not responding.Make sure FastAPI server is running.")
+
+    try:
+        with st.spinner("Generating prediction..."):
+            prediction = model.predict([features])
+
+        st.success(f"Prediction: {prediction[0]}")
+
+    except Exception as e:
+        st.error("Prediction failed.")
