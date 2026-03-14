@@ -1,6 +1,7 @@
 import streamlit as st
 import requests
 import joblib
+from pathlib import Path
 st.title("Diabeties Prediction app")
 st.subheader("Machine Learning Model Demo")
 st.markdown("Enter 10 features  and click ** Predict ** to get the prediction")
@@ -18,7 +19,11 @@ The model predicts values based on user input features.
 """
 )
 features=[]
-model=joblib.load("diabetes.pkl")
+BASE_DIR = Path(__file__).resolve().parent
+model_path = BASE_DIR / "diabetes.pkl"
+
+model = joblib.load(model_path)
+
 
 
 for i in range(10):
